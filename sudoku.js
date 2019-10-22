@@ -27,6 +27,7 @@ function init () {
 function init_model () {
     setup_board  ();
     setup_houses ();
+    setup_clues  ();
 }
 
 //
@@ -111,6 +112,16 @@ function setup_houses () {
     }
 }
 
+//
+// Set up the clues
+//
+function setup_clues () {
+    game . board . forEach (function (row, x) {
+        row . split ('') . forEach (function (char, y) {
+            board [id (x, y)] . value = char;
+        })
+    })
+}
 
 //
 // Given (x, y) coordinates, return a set (string) of classes
@@ -146,5 +157,16 @@ function init_page () {
     }
 
     $("#field") . html (table);
+
+    //
+    // Set up the clues
+    //
+    for (var index in board) {
+        var cell = board [index] . value;
+        if (cell != ' ') {
+            $("#" + index) . html (cell);
+            $("#" + index) . addClass ("clue");
+        }
+    }
 }
         
