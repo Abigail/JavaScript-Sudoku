@@ -168,5 +168,8 @@ function init_page () {
             $("#" + index) . addClass ("clue");
         }
     }
+
+    var name = id (4, 4);
+    $("#" + name) . addClass ("focus");
 }
         

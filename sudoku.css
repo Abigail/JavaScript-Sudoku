@@ -36,3 +36,8 @@ div.clue {
     font-size:        250%;
     font-weight:      bold;
 }
+
+div.focus {
+    height:           100%;
+    box-shadow:       inset 0px 0px 0px 4px darkred;
+}
