@@ -1,7 +1,8 @@
 var board  = {};
 var houses = {};
 var game;
-var size  =  9;  // For now; will change in the future.
+var size   =  9;  // For now; will change in the future.
+var focus  = [4, 4];
 
 $(document) . ready (
     function () {
@@ -15,10 +16,28 @@ $(document) . ready (
 //
 function init () {
     game = sudoku_games ["wiki_1"];
-    init_model ();
-    init_page  ();
+    init_model    ();
+    init_page     ();
+    init_handlers ();
 }
 
+
+function init_handlers () {
+    //
+    // Bind keypresses 
+    //
+    $(document) . keypress (function (event) {
+        var str = String . fromCharCode (event . charCode);
+        if (str == "h") {move_focus ( 0, -1)}
+        if (str == "j") {move_focus ( 1,  0)}
+        if (str == "k") {move_focus (-1,  0)}
+        if (str == "l") {move_focus ( 0,  1)}
+        if (str == "H") {move_focus ( 0, -3)}
+        if (str == "J") {move_focus ( 3,  0)}
+        if (str == "K") {move_focus (-3,  0)}
+        if (str == "L") {move_focus ( 0,  3)}
+    });
+}
 
 
 //
@@ -169,7 +188,33 @@ function init_page () {
         }
     }
 
-    var name = id (4, 4);
-    $("#" + name) . addClass ("focus");
+    set_focus (4, 4);
 }
+
+//
+// Set the focus
+//
+function set_focus (x, y) {
+    var class_name = "focus";
+    var name  = id (x, y);
+
+    $("." + class_name) . removeClass (class_name);
+    $("#" + name)       . addClass    (class_name);
+
+    focus = [x, y];
+}
+
         
+
+//
+// Move the focus
+//
+function move_focus (dx, dy) {
+    var new_x = focus [0] + dx;
+    var new_y = focus [1] + dy;
+
+    if (0 <= new_x && new_x < size &&
+        0 <= new_y && new_y < size) {
+        set_focus (new_x, new_y);
+    }
+}
